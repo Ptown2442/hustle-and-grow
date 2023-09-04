@@ -1,6 +1,5 @@
 import { Button, Heading } from "@chakra-ui/react";
 import cities, { Cities } from "../data/cities";
-import { GamePlayData } from "../App";
 
 interface Props {
   onSelectCity: (city: Cities) => void;

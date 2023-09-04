@@ -4,14 +4,14 @@ import ColorModeSwitch from "./ColorModeSwitch";
 import { Cities } from "../data/cities";
 
 interface Props {
-  city: Cities;
+  city: Cities | null;
 }
 
 const NavBar = ({ city }: Props) => {
   return (
     <HStack padding="10px">
       <Image src={logo} boxSize="60px" />
-      <Text>current location: {city.name}</Text>
+      <Text>current location: {city?.name}</Text>
       <ColorModeSwitch />
     </HStack>
   );
