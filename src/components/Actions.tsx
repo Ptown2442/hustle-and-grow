@@ -1,5 +1,4 @@
 import { Button, HStack, Heading } from "@chakra-ui/react";
-import { GamePlayData } from "../App";
 
 interface Props {
   onHustler: (money: number) => void;

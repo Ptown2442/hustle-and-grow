@@ -1,11 +1,18 @@
 import { useState } from "react";
-import { Grid, GridItem, Heading } from "@chakra-ui/react";
+import {
+  Button,
+  Grid,
+  GridItem,
+  HStack,
+  Heading,
+  Select,
+} from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import StartingPoint from "./components/StartingPoint";
-import { Cities } from "./data/cities";
+import cities, { Cities } from "./data/cities";
 import Actions from "./components/Actions";
 import Inventory from "./components/Inventory";
-import Operations from "./components/Operations";
+import Airport from "./components/Airport";
 
 export interface GamePlayData {
   money: number;
@@ -32,6 +39,8 @@ function App() {
     {} as GamePlayData
   );
 
+  const [isFlying, setIsFlying] = useState("false");
+
   const [inventory, setInventory] = useState<InventoryList>(
     {} as InventoryList
   );
@@ -44,7 +53,6 @@ function App() {
   if (!gamePlayData.city && (gamePlayData.money || inventory.indoKush))
     return (
       <StartingPoint
-        selectedCity={gamePlayData.city}
         onSelectCity={(city) => setGamePlayData({ ...gamePlayData, city })}
       ></StartingPoint>
     );
@@ -52,9 +60,91 @@ function App() {
   if (!gamePlayData.money && !inventory.indoKush)
     return (
       <Actions
-        onHustler={(money) => setGamePlayData({ ...gamePlayData, money })}
-        onFront={(indoKush) => setInventory({ ...inventory, indoKush })}
-        onBorrow={(money) => setGamePlayData({ ...gamePlayData, money })}
+        onHustler={(money) => {
+          let hour = 0;
+          let day = 0;
+          let cocaine = 0;
+          let heroine = 0;
+          let indoKush = 0;
+          let molly = 0;
+          let wildParty = 0;
+          let percs = 0;
+          let meth = 0;
+          setInventory({
+            cocaine,
+            heroine,
+            indoKush,
+            molly,
+            wildParty,
+            meth,
+            percs,
+          });
+          setGamePlayData({ ...gamePlayData, money, day, hour });
+        }}
+        onFront={(indoKush) => {
+          let hour = 0;
+          let day = 0;
+          let debt = 100;
+          let money = 0;
+          let category = "indoKush";
+          let amount = 10;
+          let cocaine = 0;
+          let heroine = 0;
+          let molly = 0;
+          let wildParty = 0;
+          let percs = 0;
+          let meth = 0;
+          setInventory({
+            cocaine,
+            heroine,
+            indoKush,
+            molly,
+            wildParty,
+            meth,
+            percs,
+          });
+          setGamePlayData({
+            ...gamePlayData,
+            hour,
+            day,
+            debt,
+            money,
+            amount,
+            category,
+          });
+        }}
+        onBorrow={(money) => {
+          let day = 0;
+          let hour = 0;
+          let category = "money";
+          let debt = 5000;
+          let amount = 30;
+          let cocaine = 0;
+          let heroine = 0;
+          let indoKush = 0;
+          let molly = 0;
+          let wildParty = 0;
+          let percs = 0;
+          let meth = 0;
+          setInventory({
+            cocaine,
+            heroine,
+            indoKush,
+            molly,
+            wildParty,
+            meth,
+            percs,
+          });
+          setGamePlayData({
+            ...gamePlayData,
+            day,
+            hour,
+            category,
+            money,
+            amount,
+            debt,
+          });
+        }}
       ></Actions>
     );
   return (
@@ -63,7 +153,7 @@ function App() {
         base: `"nav nav" "aside main"`,
       }}
       templateColumns={{
-        base: "350px 1fr 2fr",
+        base: "200px 1fr",
       }}
     >
       <GridItem area="nav">
@@ -74,7 +164,30 @@ function App() {
         <Inventory inventoryList={inventory}></Inventory>
       </GridItem>
       <GridItem area="main">
-        <Operations></Operations>
+        {isFlying === "true" && (
+          <Airport
+            onFlight={(city) => setGamePlayData({ ...gamePlayData, city })}
+          ></Airport>
+        )}
+        {isFlying === "false" && gamePlayData.money >= 300 && (
+          <Button
+            onClick={() => {
+              let money = gamePlayData.money - 300;
+              setGamePlayData({ ...gamePlayData, money });
+
+              setIsFlying("true");
+            }}
+          >
+            Book a Flight ($300 cost)
+          </Button>
+        )}
+        {isFlying === "false" && (
+          <Button
+            onClick={() => {
+              let day = gamePlayData.day + 1;
+            }}
+          ></Button>
+        )}
       </GridItem>
     </Grid>
   );

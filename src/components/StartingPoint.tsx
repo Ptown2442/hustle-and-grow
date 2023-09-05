@@ -3,10 +3,9 @@ import cities, { Cities } from "../data/cities";
 
 interface Props {
   onSelectCity: (city: Cities) => void;
-  selectedCity: Cities | null;
 }
 
-const StartingPoint = ({ onSelectCity, selectedCity }: Props) => {
+const StartingPoint = ({ onSelectCity }: Props) => {
   return (
     <>
       <Heading textAlign="center">Choose your start location</Heading>
