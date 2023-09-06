@@ -244,10 +244,23 @@ function App() {
               <Button onClick={() => setQty(50)}>50X</Button>
               <Button onClick={() => setQty(100)}>100X</Button>
             </HStack>
-            <HStack>
+            <div>
               <Heading fontSize={13}>
                 Click below to complete your purchase, then leave!
               </Heading>
+              <Button
+                onClick={() => {
+                  let meth = inventory.meth + qty;
+                  let money =
+                    gamePlayData.money -
+                    qty * 300 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, meth });
+                }}
+              >
+                Meth: Buy {qty} oz. Cost: $
+                {qty * (gamePlayData.city.timezone || 1) * 300}
+              </Button>
               <Button
                 onClick={() => {
                   let cocaine = inventory.cocaine + qty;
@@ -259,9 +272,168 @@ function App() {
                 }}
               >
                 Cocaine: Buy {qty} oz. Cost: $
-                {qty * (gamePlayData.city.timezone || 1) * 25}
+                {qty * (gamePlayData.city.timezone || 1) * 250}
               </Button>
-            </HStack>
+              <Button
+                onClick={() => {
+                  let indoKush = inventory.indoKush + qty;
+                  let money =
+                    gamePlayData.money - qty * 65 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, indoKush });
+                }}
+              >
+                Indo-Kush: Buy {qty} oz. Cost: $
+                {qty * (gamePlayData.city.timezone || 1) * 65}
+              </Button>
+              <Button
+                onClick={() => {
+                  let molly = inventory.molly + qty;
+                  let money =
+                    gamePlayData.money -
+                    qty * 200 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, molly });
+                }}
+              >
+                Molly: Buy {qty} oz. Cost: $
+                {qty * (gamePlayData.city.timezone || 1) * 200}
+              </Button>
+              <Button
+                onClick={() => {
+                  let percs = inventory.percs + qty;
+                  let money =
+                    gamePlayData.money -
+                    qty * 120 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, percs });
+                }}
+              >
+                Percs: Buy {qty} oz. Cost: $
+                {qty * (gamePlayData.city.timezone || 1) * 120}
+              </Button>
+              <Button
+                onClick={() => {
+                  let wildParty = inventory.wildParty + qty;
+                  let money =
+                    gamePlayData.money -
+                    qty * 110 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, wildParty });
+                }}
+              >
+                WildParty: Buy {qty} oz. Cost: $
+                {qty * (gamePlayData.city.timezone || 1) * 110}
+              </Button>
+              <Button
+                onClick={() => {
+                  let heroine = inventory.heroine + qty;
+                  let money =
+                    gamePlayData.money -
+                    qty * 160 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, heroine });
+                }}
+              >
+                Cocaine: Buy {qty} oz. Cost: $
+                {qty * (gamePlayData.city.timezone || 1) * 160}
+              </Button>
+            </div>
+            <div>
+              <Heading fontSize={13}>
+                If You're holding I can always use a resupply.
+              </Heading>
+              <Button
+                onClick={() => {
+                  let meth = inventory.meth - qty;
+                  let money =
+                    gamePlayData.money +
+                    qty * 300 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, meth });
+                }}
+              >
+                Meth: Sell {qty} oz. Gross: $
+                {qty * (gamePlayData.city.timezone || 1) * 300}
+              </Button>
+              <Button
+                onClick={() => {
+                  let cocaine = inventory.cocaine - qty;
+                  let money =
+                    gamePlayData.money +
+                    qty * 250 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, cocaine });
+                }}
+              >
+                Cocaine: Sell {qty} oz. Gross: $
+                {qty * (gamePlayData.city.timezone || 1) * 250}
+              </Button>
+              <Button
+                onClick={() => {
+                  let indoKush = inventory.indoKush - qty;
+                  let money =
+                    gamePlayData.money + qty * 65 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, indoKush });
+                }}
+              >
+                Indo-Kush: Sell {qty} oz. Gross: $
+                {qty * (gamePlayData.city.timezone || 1) * 65}
+              </Button>
+              <Button
+                onClick={() => {
+                  let molly = inventory.molly - qty;
+                  let money =
+                    gamePlayData.money +
+                    qty * 200 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, molly });
+                }}
+              >
+                Molly: Sell {qty} oz. Gross: $
+                {qty * (gamePlayData.city.timezone || 1) * 200}
+              </Button>
+              <Button
+                onClick={() => {
+                  let percs = inventory.percs - qty;
+                  let money =
+                    gamePlayData.money +
+                    qty * 120 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, percs });
+                }}
+              >
+                Percs: Sell {qty} oz. Gross: $
+                {qty * (gamePlayData.city.timezone || 1) * 120}
+              </Button>
+              <Button
+                onClick={() => {
+                  let wildParty = inventory.wildParty - qty;
+                  let money =
+                    gamePlayData.money +
+                    qty * 110 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, wildParty });
+                }}
+              >
+                WildParty: Sell {qty} oz. Gross: $
+                {qty * (gamePlayData.city.timezone || 1) * 110}
+              </Button>
+              <Button
+                onClick={() => {
+                  let heroine = inventory.heroine - qty;
+                  let money =
+                    gamePlayData.money +
+                    qty * 160 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, heroine });
+                }}
+              >
+                Cocaine: Sell {qty} oz. Gross: $
+                {qty * (gamePlayData.city.timezone || 1) * 160}
+              </Button>
+            </div>
           </>
         )}
         {isFlying === "true" && (
