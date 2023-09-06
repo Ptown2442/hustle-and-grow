@@ -6,6 +6,7 @@ import {
   HStack,
   Heading,
   Select,
+  Text,
 } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import StartingPoint from "./components/StartingPoint";
@@ -40,6 +41,8 @@ function App() {
   const [gamePlayData, setGamePlayData] = useState<GamePlayData>(
     {} as GamePlayData
   );
+
+  const [qty, setQty] = useState(1);
 
   const [isShopping, setIsShopping] = useState("false");
 
@@ -180,17 +183,44 @@ function App() {
           ></BusStation>
         )}
         {isShopping === "true" && (
-          <Shop
-            qty={1}
-            cocaine={inventory.cocaine}
-            meth={inventory.meth}
-            wildparty={inventory.wildParty}
-            molly={inventory.molly}
-            indoKush={inventory.indoKush}
-            money={gamePlayData.money}
-            percs={inventory.percs}
-            heroine={inventory.heroine}
-          ></Shop>
+          <>
+            <HStack>
+              <Heading>
+                Welcome to King Prawn Pawn...we got what you need
+              </Heading>
+              <Text>
+                select whatever you want, you can buy singles or in bulk
+              </Text>
+              <Button onClick={() => setIsShopping("false")}>
+                Exit the Store
+              </Button>
+            </HStack>
+            <HStack>
+              <Heading>Select Quantity, currently selected : {qty}</Heading>
+              <Button onClick={() => setQty(1)}>1X</Button>
+              <Button onClick={() => setQty(10)}>10X</Button>
+              <Button onClick={() => setQty(50)}>50X</Button>
+              <Button onClick={() => setQty(100)}>100X</Button>
+            </HStack>
+            <HStack>
+              <Heading>
+                Click below to complete your purchase, then leave!
+              </Heading>
+              <Button
+                onClick={() => {
+                  let cocaine = inventory.cocaine + qty;
+                  let money =
+                    gamePlayData.money -
+                    qty * 250 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, cocaine });
+                }}
+              >
+                Cocaine: Buy {qty} oz. Cost: $
+                {qty * (gamePlayData.city.timezone || 1) * 25}
+              </Button>
+            </HStack>
+          </>
         )}
         {isFlying === "true" && (
           <Airport
