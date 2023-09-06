@@ -55,9 +55,9 @@ function App() {
   );
 
   let currents = `wallet: ${gamePlayData.money || 0} 
-    debt: ${gamePlayData.debt || 0} days passed: ${
-    gamePlayData.day || 0
-  } hours passed: ${gamePlayData.hour || 0}`;
+    debt: ${gamePlayData.debt || 0} day: ${gamePlayData.day || 0} hour: ${
+    gamePlayData.hour || 0
+  }`;
 
   if (!gamePlayData.city && (gamePlayData.money || inventory.indoKush))
     return (
@@ -173,69 +173,6 @@ function App() {
         <Inventory inventoryList={inventory}></Inventory>
       </GridItem>
       <GridItem area="main">
-        {isStation === "true" && (
-          <BusStation
-            onBussing={(city) => {
-              let day = gamePlayData.day + 1;
-              setGamePlayData({ ...gamePlayData, day, city });
-              setIsStation("false");
-            }}
-          ></BusStation>
-        )}
-        {isShopping === "true" && (
-          <>
-            <HStack>
-              <Heading>
-                Welcome to King Prawn Pawn...we got what you need
-              </Heading>
-              <Text>
-                select whatever you want, you can buy singles or in bulk
-              </Text>
-              <Button onClick={() => setIsShopping("false")}>
-                Exit the Store
-              </Button>
-            </HStack>
-            <HStack>
-              <Heading>Select Quantity, currently selected : {qty}</Heading>
-              <Button onClick={() => setQty(1)}>1X</Button>
-              <Button onClick={() => setQty(10)}>10X</Button>
-              <Button onClick={() => setQty(50)}>50X</Button>
-              <Button onClick={() => setQty(100)}>100X</Button>
-            </HStack>
-            <HStack>
-              <Heading>
-                Click below to complete your purchase, then leave!
-              </Heading>
-              <Button
-                onClick={() => {
-                  let cocaine = inventory.cocaine + qty;
-                  let money =
-                    gamePlayData.money -
-                    qty * 250 * gamePlayData.city?.timezone;
-                  setGamePlayData({ ...gamePlayData, money });
-                  setInventory({ ...inventory, cocaine });
-                }}
-              >
-                Cocaine: Buy {qty} oz. Cost: $
-                {qty * (gamePlayData.city.timezone || 1) * 25}
-              </Button>
-            </HStack>
-          </>
-        )}
-        {isFlying === "true" && (
-          <Airport
-            onFlight={(city) => {
-              let hour =
-                gamePlayData.hour + 5 < 24
-                  ? gamePlayData.hour + 5
-                  : gamePlayData.hour + 5 - 24;
-              let day =
-                gamePlayData.hour < 5 ? gamePlayData.day + 1 : gamePlayData.day;
-              setGamePlayData({ ...gamePlayData, city, day, hour });
-              setIsFlying("false");
-            }}
-          ></Airport>
-        )}
         {isShopping === "false" &&
           isFlying === "false" &&
           isStation === "false" && (
@@ -273,6 +210,74 @@ function App() {
               Travel by bus (Free but slower)
             </Button>
           )}
+      </GridItem>
+      <GridItem area="travel">
+        {" "}
+        {isStation === "true" && (
+          <BusStation
+            onBussing={(city) => {
+              let day = gamePlayData.day + 1;
+              setGamePlayData({ ...gamePlayData, day, city });
+              setIsStation("false");
+            }}
+          ></BusStation>
+        )}
+        {isShopping === "true" && (
+          <>
+            <HStack>
+              <Heading fontSize={20}>
+                Welcome to King Prawn Pawn...we got what you need
+              </Heading>
+              <Text fontSize={15}>
+                select whatever you want, you can buy singles or in bulk
+              </Text>
+              <Button onClick={() => setIsShopping("false")}>
+                Exit the Store
+              </Button>
+            </HStack>
+            <HStack>
+              <Heading fontSize={13}>
+                Select Quantity, currently selected : {qty}
+              </Heading>
+              <Button onClick={() => setQty(1)}>1X</Button>
+              <Button onClick={() => setQty(10)}>10X</Button>
+              <Button onClick={() => setQty(50)}>50X</Button>
+              <Button onClick={() => setQty(100)}>100X</Button>
+            </HStack>
+            <HStack>
+              <Heading fontSize={13}>
+                Click below to complete your purchase, then leave!
+              </Heading>
+              <Button
+                onClick={() => {
+                  let cocaine = inventory.cocaine + qty;
+                  let money =
+                    gamePlayData.money -
+                    qty * 250 * gamePlayData.city?.timezone;
+                  setGamePlayData({ ...gamePlayData, money });
+                  setInventory({ ...inventory, cocaine });
+                }}
+              >
+                Cocaine: Buy {qty} oz. Cost: $
+                {qty * (gamePlayData.city.timezone || 1) * 25}
+              </Button>
+            </HStack>
+          </>
+        )}
+        {isFlying === "true" && (
+          <Airport
+            onFlight={(city) => {
+              let hour =
+                gamePlayData.hour + 5 < 24
+                  ? gamePlayData.hour + 5
+                  : gamePlayData.hour + 5 - 24;
+              let day =
+                gamePlayData.hour < 5 ? gamePlayData.day + 1 : gamePlayData.day;
+              setGamePlayData({ ...gamePlayData, city, day, hour });
+              setIsFlying("false");
+            }}
+          ></Airport>
+        )}
       </GridItem>
     </Grid>
   );
