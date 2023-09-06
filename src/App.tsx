@@ -13,6 +13,8 @@ import cities, { Cities } from "./data/cities";
 import Actions from "./components/Actions";
 import Inventory from "./components/Inventory";
 import Airport from "./components/Airport";
+import BusStation from "./components/BusStation";
+import Shop from "./components/Shop";
 
 export interface GamePlayData {
   money: number;
@@ -38,6 +40,10 @@ function App() {
   const [gamePlayData, setGamePlayData] = useState<GamePlayData>(
     {} as GamePlayData
   );
+
+  const [isShopping, setIsShopping] = useState("false");
+
+  const [isStation, setIsStation] = useState("false");
 
   const [isFlying, setIsFlying] = useState("false");
 
@@ -164,30 +170,79 @@ function App() {
         <Inventory inventoryList={inventory}></Inventory>
       </GridItem>
       <GridItem area="main">
+        {isStation === "true" && (
+          <BusStation
+            onBussing={(city) => {
+              let day = gamePlayData.day + 1;
+              setGamePlayData({ ...gamePlayData, day, city });
+              setIsStation("false");
+            }}
+          ></BusStation>
+        )}
+        {isShopping === "true" && (
+          <Shop
+            qty={1}
+            cocaine={inventory.cocaine}
+            meth={inventory.meth}
+            wildparty={inventory.wildParty}
+            molly={inventory.molly}
+            indoKush={inventory.indoKush}
+            money={gamePlayData.money}
+            percs={inventory.percs}
+            heroine={inventory.heroine}
+          ></Shop>
+        )}
         {isFlying === "true" && (
           <Airport
-            onFlight={(city) => setGamePlayData({ ...gamePlayData, city })}
+            onFlight={(city) => {
+              let hour =
+                gamePlayData.hour + 5 < 24
+                  ? gamePlayData.hour + 5
+                  : gamePlayData.hour + 5 - 24;
+              let day =
+                gamePlayData.hour < 5 ? gamePlayData.day + 1 : gamePlayData.day;
+              setGamePlayData({ ...gamePlayData, city, day, hour });
+              setIsFlying("false");
+            }}
           ></Airport>
         )}
-        {isFlying === "false" && gamePlayData.money >= 300 && (
-          <Button
-            onClick={() => {
-              let money = gamePlayData.money - 300;
-              setGamePlayData({ ...gamePlayData, money });
+        {isShopping === "false" &&
+          isFlying === "false" &&
+          isStation === "false" && (
+            <Button
+              onClick={() => {
+                setIsShopping("true");
+              }}
+            >
+              Visit the local dealer
+            </Button>
+          )}
+        {isShopping === "false" &&
+          isFlying === "false" &&
+          isStation === "false" &&
+          gamePlayData.money >= 300 && (
+            <Button
+              onClick={() => {
+                let money = gamePlayData.money - 300;
+                setGamePlayData({ ...gamePlayData, money });
 
-              setIsFlying("true");
-            }}
-          >
-            Book a Flight ($300 cost)
-          </Button>
-        )}
-        {isFlying === "false" && (
-          <Button
-            onClick={() => {
-              let day = gamePlayData.day + 1;
-            }}
-          ></Button>
-        )}
+                setIsFlying("true");
+              }}
+            >
+              Book a Flight ($300 cost)
+            </Button>
+          )}
+        {isShopping === "false" &&
+          isFlying === "false" &&
+          isStation === "false" && (
+            <Button
+              onClick={() => {
+                setIsStation("true");
+              }}
+            >
+              Travel by bus (Free but slower)
+            </Button>
+          )}
       </GridItem>
     </Grid>
   );
