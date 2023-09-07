@@ -40,6 +40,22 @@ function App() {
     {} as GamePlayData
   );
 
+  // function checkDebt() => {
+  //   if (gamePlayData.amount === gamePlayData.day && gamePlayData.amount !== 0) {
+  //     let amount = 0;
+  //     if (gamePlayData.category === 'money'){
+  //       debt = 0;
+  //       money = gamePlayData.money - 5000;
+  //       setGamePlayData({ ...gamePlayData, amount, money, debt })
+  //     } else {
+  //       debt = 0;
+  //       indoKush = inventory.indoKush - 100;
+  //       setInventory({ ...inventory, indoKush });
+  //       setGamePlayData({ ...gamePlayData, amount, debt})
+  //     }
+  //   }
+  // }
+
   const [qty, setQty] = useState(1);
 
   const [isShopping, setIsShopping] = useState("false");
@@ -176,6 +192,7 @@ function App() {
           isStation === "false" && (
             <Button
               onClick={() => {
+                // checkDebt();
                 setIsShopping("true");
               }}
             >
@@ -264,8 +281,8 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 300}
               </Button>
               <Button
-                disabled={
-                  gamePlayData.money >= qty * 250 * gamePlayData.city?.timezone
+                isDisabled={
+                  gamePlayData.money < qty * 250 * gamePlayData.city?.timezone
                 }
                 onClick={() => {
                   let cocaine = inventory.cocaine + qty;
@@ -280,8 +297,8 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 250}
               </Button>
               <Button
-                disabled={
-                  gamePlayData.money >= qty * 65 * gamePlayData.city?.timezone
+                isDisabled={
+                  gamePlayData.money < qty * 65 * gamePlayData.city?.timezone
                 }
                 onClick={() => {
                   let indoKush = inventory.indoKush + qty;
@@ -295,8 +312,8 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 65}
               </Button>
               <Button
-                disabled={
-                  gamePlayData.money >= qty * 200 * gamePlayData.city?.timezone
+                isDisabled={
+                  gamePlayData.money < qty * 200 * gamePlayData.city?.timezone
                 }
                 onClick={() => {
                   let molly = inventory.molly + qty;
@@ -311,8 +328,8 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 200}
               </Button>
               <Button
-                disabled={
-                  gamePlayData.money >= qty * 120 * gamePlayData.city?.timezone
+                isDisabled={
+                  gamePlayData.money < qty * 120 * gamePlayData.city?.timezone
                 }
                 onClick={() => {
                   let percs = inventory.percs + qty;
@@ -327,8 +344,8 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 120}
               </Button>
               <Button
-                disabled={
-                  gamePlayData.money >= qty * 110 * gamePlayData.city?.timezone
+                isDisabled={
+                  gamePlayData.money < qty * 110 * gamePlayData.city?.timezone
                 }
                 onClick={() => {
                   let wildParty = inventory.wildParty + qty;
@@ -343,8 +360,8 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 110}
               </Button>
               <Button
-                disabled={
-                  gamePlayData.money >= qty * 160 * gamePlayData.city?.timezone
+                isDisabled={
+                  gamePlayData.money < qty * 160 * gamePlayData.city?.timezone
                 }
                 onClick={() => {
                   let heroine = inventory.heroine + qty;
@@ -364,7 +381,7 @@ function App() {
                 If You're holding I can always use a resupply.
               </Heading>
               <Button
-                disabled={inventory.meth >= qty}
+                isDisabled={inventory.meth < qty}
                 onClick={() => {
                   let meth = inventory.meth - qty;
                   let money =
@@ -378,7 +395,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 300}
               </Button>
               <Button
-                disabled={inventory.cocaine >= qty}
+                isDisabled={inventory.cocaine < qty}
                 onClick={() => {
                   let cocaine = inventory.cocaine - qty;
                   let money =
@@ -392,7 +409,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 250}
               </Button>
               <Button
-                disabled={inventory.indoKush >= qty}
+                isDisabled={inventory.indoKush < qty}
                 onClick={() => {
                   let indoKush = inventory.indoKush - qty;
                   let money =
@@ -405,7 +422,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 65}
               </Button>
               <Button
-                disabled={inventory.molly >= qty}
+                isDisabled={inventory.molly < qty}
                 onClick={() => {
                   let molly = inventory.molly - qty;
                   let money =
@@ -419,7 +436,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 200}
               </Button>
               <Button
-                disabled={inventory.percs >= qty}
+                isDisabled={inventory.percs < qty}
                 onClick={() => {
                   let percs = inventory.percs - qty;
                   let money =
@@ -433,7 +450,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 120}
               </Button>
               <Button
-                disabled={inventory.wildParty >= qty}
+                isDisabled={inventory.wildParty < qty}
                 onClick={() => {
                   let wildParty = inventory.wildParty - qty;
                   let money =
@@ -447,7 +464,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 110}
               </Button>
               <Button
-                disabled={inventory.heroine >= qty}
+                isDisabled={inventory.heroine < qty}
                 onClick={() => {
                   let heroine = inventory.heroine - qty;
                   let money =
