@@ -5,17 +5,15 @@ import {
   GridItem,
   HStack,
   Heading,
-  Select,
   Text,
 } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import StartingPoint from "./components/StartingPoint";
-import cities, { Cities } from "./data/cities";
+import { Cities } from "./data/cities";
 import Actions from "./components/Actions";
 import Inventory from "./components/Inventory";
 import Airport from "./components/Airport";
 import BusStation from "./components/BusStation";
-import Shop from "./components/Shop";
 
 export interface GamePlayData {
   money: number;
@@ -249,6 +247,10 @@ function App() {
                 Click below to complete your purchase, then leave!
               </Heading>
               <Button
+                isDisabled={
+                  gamePlayData.money <
+                  qty * 300 * (gamePlayData.city?.timezone | 1)
+                }
                 onClick={() => {
                   let meth = inventory.meth + qty;
                   let money =
@@ -262,6 +264,9 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 300}
               </Button>
               <Button
+                disabled={
+                  gamePlayData.money >= qty * 250 * gamePlayData.city?.timezone
+                }
                 onClick={() => {
                   let cocaine = inventory.cocaine + qty;
                   let money =
@@ -275,6 +280,9 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 250}
               </Button>
               <Button
+                disabled={
+                  gamePlayData.money >= qty * 65 * gamePlayData.city?.timezone
+                }
                 onClick={() => {
                   let indoKush = inventory.indoKush + qty;
                   let money =
@@ -287,6 +295,9 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 65}
               </Button>
               <Button
+                disabled={
+                  gamePlayData.money >= qty * 200 * gamePlayData.city?.timezone
+                }
                 onClick={() => {
                   let molly = inventory.molly + qty;
                   let money =
@@ -300,6 +311,9 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 200}
               </Button>
               <Button
+                disabled={
+                  gamePlayData.money >= qty * 120 * gamePlayData.city?.timezone
+                }
                 onClick={() => {
                   let percs = inventory.percs + qty;
                   let money =
@@ -313,6 +327,9 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 120}
               </Button>
               <Button
+                disabled={
+                  gamePlayData.money >= qty * 110 * gamePlayData.city?.timezone
+                }
                 onClick={() => {
                   let wildParty = inventory.wildParty + qty;
                   let money =
@@ -326,6 +343,9 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 110}
               </Button>
               <Button
+                disabled={
+                  gamePlayData.money >= qty * 160 * gamePlayData.city?.timezone
+                }
                 onClick={() => {
                   let heroine = inventory.heroine + qty;
                   let money =
@@ -335,7 +355,7 @@ function App() {
                   setInventory({ ...inventory, heroine });
                 }}
               >
-                Cocaine: Buy {qty} oz. Cost: $
+                Heroine: Buy {qty} oz. Cost: $
                 {qty * (gamePlayData.city.timezone || 1) * 160}
               </Button>
             </div>
@@ -344,6 +364,7 @@ function App() {
                 If You're holding I can always use a resupply.
               </Heading>
               <Button
+                disabled={inventory.meth >= qty}
                 onClick={() => {
                   let meth = inventory.meth - qty;
                   let money =
@@ -357,6 +378,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 300}
               </Button>
               <Button
+                disabled={inventory.cocaine >= qty}
                 onClick={() => {
                   let cocaine = inventory.cocaine - qty;
                   let money =
@@ -370,6 +392,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 250}
               </Button>
               <Button
+                disabled={inventory.indoKush >= qty}
                 onClick={() => {
                   let indoKush = inventory.indoKush - qty;
                   let money =
@@ -382,6 +405,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 65}
               </Button>
               <Button
+                disabled={inventory.molly >= qty}
                 onClick={() => {
                   let molly = inventory.molly - qty;
                   let money =
@@ -395,6 +419,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 200}
               </Button>
               <Button
+                disabled={inventory.percs >= qty}
                 onClick={() => {
                   let percs = inventory.percs - qty;
                   let money =
@@ -408,6 +433,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 120}
               </Button>
               <Button
+                disabled={inventory.wildParty >= qty}
                 onClick={() => {
                   let wildParty = inventory.wildParty - qty;
                   let money =
@@ -421,6 +447,7 @@ function App() {
                 {qty * (gamePlayData.city.timezone || 1) * 110}
               </Button>
               <Button
+                disabled={inventory.heroine >= qty}
                 onClick={() => {
                   let heroine = inventory.heroine - qty;
                   let money =
@@ -430,7 +457,7 @@ function App() {
                   setInventory({ ...inventory, heroine });
                 }}
               >
-                Cocaine: Sell {qty} oz. Gross: $
+                Heroine: Sell {qty} oz. Gross: $
                 {qty * (gamePlayData.city.timezone || 1) * 160}
               </Button>
             </div>
